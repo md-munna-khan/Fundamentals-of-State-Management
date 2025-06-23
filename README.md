@@ -59,3 +59,130 @@ render()
 document.getElementById("Increment").addEventListener("click", increment);
 document.getElementById("Decrement").addEventListener("click", decrement);
 ```
+
+## 20-3 React State & Re-Renders: Stateless vs Stateful
+🧠 1. What is React State?
+State is a built-in object used to hold dynamic data in a component. When the state changes, React re-renders the component to reflect the updated data.
+```js
+const [count, setCount] = useState(0);
+```
+count is the current state value.
+
+setCount is the function to update the state.
+
+Changing state causes the component to re-render.
+
+🔁 2. Re-Renders in React
+Whenever a component’s state or props change, React re-renders it.
+
+Re-render means React calls the component function again.
+
+The virtual DOM is then used to efficiently update the real DOM.
+
+Re-render is not reload. It’s a lightweight update.
+
+🆚 3. Stateless vs Stateful Components
+Feature	Stateless Component	Stateful Component
+Holds state?	❌ No	✅ Yes
+Re-renders on state?	❌ Doesn’t have state, so no	✅ Re-renders when state updates
+Example	Pure UI, no internal logic	Has logic to manage internal changes
+Use case	Display-only components	Interactive components
+
+✅ Stateless Component Example
+```js
+function Greeting({ name }) {
+  return <h1>Hello, {name}</h1>;
+}
+```
+Pure function.
+
+No internal state.
+
+Renders based only on props.
+
+✅ Stateful Component Example
+```js
+import { useState } from 'react';
+
+function Counter() {
+  const [count, setCount] = useState(0);
+
+  return (
+    <>
+      <p>Count: {count}</p>
+      <button onClick={() => setCount(count + 1)}>Increase</button>
+    </>
+  );
+}
+```
+Uses useState.
+
+Internal state drives UI.
+
+Re-renders on state change.
+## 20-5 React Reconciler & Fiber Explained Simply
+ 1. What is React Reconciler?
+The React Reconciler is the part of React that decides:
+
+"What changed in your app, and how should I update the screen?"
+
+Whenever you update your state (like using setCount), React doesn’t blindly re-render everything.
+
+Instead, it asks:
+
+“What changed? Only update that part.”
+
+That smart comparison and update decision-making is done by the Reconciler.
+
+#### 2. What is Fiber?
+Fiber is the new version of the Reconciler introduced in React 16+.
+
+Fiber makes React smarter, faster, and more flexible.
+
+ #### Why Fiber was needed:
+Before React 16 (old reconciler), React updated everything in one go — big updates could block the browser and freeze the UI.
+
+With Fiber, React:
+
+✅ Breaks work into smaller chunks
+✅ Can pause work
+✅ Can resume work
+✅ Gives priority to more important updates
+✅ Makes UI smoother, especially on slow devices
+
+📖 Simple Example:
+Imagine you're reading a book (rendering your app).
+Old React read the whole book in one go. No break. No stop.
+
+But with Fiber, React says:
+
+"I’ll read one page at a time, take breaks if needed, and read the important pages first if there’s something urgent."
+
+That’s what Fiber does — smart, interruptible work.
+
+✅ Fiber vs Old Reconciler
+Feature	Old React (Stack Reconciler)	New React (Fiber)
+Rendering style	All at once	Piece by piece (chunked)
+Can pause work	❌ No	✅ Yes
+Can prioritize tasks	❌ No	✅ Yes
+Performance	Slower	Faster and smoother
+Supports async UI	❌ No	✅ Yes (e.g., Suspense, Lazy loading)
+
+🎯 Why Fiber is Important:
+Smooth UI even when devices are slow
+
+Async rendering (used in Concurrent Mode in React 18+)
+
+Supports cool features like Suspense, Lazy loading
+
+Helps React grow with new advanced features
+
+🔁 Recap:
+Term	Meaning
+Reconciler	React’s decision-maker – what changed and what to update
+Fiber	A new, smart Reconciler system
+Benefit	Breaks tasks, pauses/resumes rendering, prioritizes work
+Real-world	Like reading a book page-by-page instead of in one go
+
+
+

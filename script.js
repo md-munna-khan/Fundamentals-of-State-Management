@@ -1,11 +1,12 @@
 let count = 0; // state
 
+
 const render=()=>{
      document.getElementById("count").innerHTML=count
 }
 
 const increment = () => {
-  count++;
+count++;
   render()
 };
 const decrement = () => {
