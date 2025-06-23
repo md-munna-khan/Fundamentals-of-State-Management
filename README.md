@@ -184,5 +184,39 @@ Fiber	A new, smart Reconciler system
 Benefit	Breaks tasks, pauses/resumes rendering, prioritizes work
 Real-world	Like reading a book page-by-page instead of in one go
 
+## 20-6 Synchronous vs Asynchronous Behavior of useState
 
+![alt text](image-1.png)
+this async  function when i runed the problem is you faces when you trigger increment and also click asyncDecrement function when asyncDecrement function hitting you first increment will be show re rendering
+the solution is 
+```js
+ setCount((prevCount)=>prevCount +1);
+ ```
+ right now he not receive actual he count receive  on memory
+```js
+import { useState } from "react";
 
+import "./App.css";
+
+function App() {
+  const [count, setCount] = useState(0);
+
+  const increment = () => {
+    setCount(count + 1);
+  };
+  const asyncIncrement = () => {
+    setTimeout(() => {
+      setCount((prevCount)=>prevCount +1);
+    }, 3000);
+  };
+  return (
+    <div>
+      <p> count:{count}</p>
+      <button onClick={increment}>increment</button>
+      <button onClick={asyncIncrement}>async Increment</button>
+    </div>
+  );
+}
+
+export default App;
+```
